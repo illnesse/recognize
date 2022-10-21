@@ -16,6 +16,7 @@ use OCA\Recognize\Db\QueueFile;
 use OCA\Recognize\Db\QueueMapper;
 use OCP\BackgroundJob\IJobList;
 use OCP\IConfig;
+use Psr\Log\LoggerInterface;
 
 class QueueService {
 	/**
@@ -33,16 +34,18 @@ class QueueService {
 	private IJobList $jobList;
 	private IConfig $config;
 
-	public function __construct(QueueMapper $queueMapper, IJobList $jobList, IConfig $config) {
+	public function __construct(QueueMapper $queueMapper, LoggerInterface $logger, IJobList $jobList, IConfig $config) {
 		$this->queueMapper = $queueMapper;
 		$this->jobList = $jobList;
 		$this->config = $config;
+		$this->logger = $logger;
 	}
 
 	/**
 	 * @throws \OCP\DB\Exception
 	 */
 	public function insertIntoQueue(string $model, QueueFile $file) : void {
+		$this->logger->debug('QueueService insertIntoQueue', ['file' => $file]);
 		// Only add to queue if this model is actually enabled
 		if ($this->config->getAppValue('recognize', $model.'.enabled', 'false') !== 'true') {
 			return;
@@ -58,6 +61,7 @@ class QueueService {
 	 * @return void
 	 */
 	public function scheduleJob(string $model, QueueFile $file) : void {
+		$this->logger->debug('QueueService scheduleJob', ['file' => $file]);
 		if (!$this->jobList->has(self::JOB_CLASSES[$model], [
 			'storageId' => $file->getStorageId(),
 			'rootId' => $file->getRootId(),

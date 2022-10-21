@@ -30,13 +30,14 @@ abstract class ClassifierJob extends TimedJob {
 		$this->userMountCache = $userMountCache;
 		$this->jobList = $jobList;
 		$this->config = $config;
-		$this->setInterval(60 * 15);
+		$this->setInterval(60 * 1);
 		$this->setTimeSensitivity(self::TIME_INSENSITIVE);
 	}
 
 	protected function runClassifier(string $model, $argument) {
 		$storageId = $argument['storageId'];
 		$rootId = $argument['rootId'];
+		$this->logger->debug('ClassifierJob runClassifier', ['argument' => $argument,'model' => $model]);
 		if ($this->config->getAppValue('recognize', $model.'.enabled', 'false') !== 'true') {
 			$this->logger->debug('Not classifying files of storage '.$storageId. ' using '.$model. ' because model is disabled');
 			// `static` to get extending subclass name

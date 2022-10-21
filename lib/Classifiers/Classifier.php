@@ -43,6 +43,7 @@ class Classifier {
 	 * @return \Generator
 	 */
 	public function classifyFiles(string $model, array $queueFiles, int $timeout): \Generator {
+		$this->logger->debug('classifyFiles', ['queueFiles' => $queueFiles, 'model' => $model]);
 		$paths = [];
 		$processedFiles = [];
 		foreach ($queueFiles as $queueFile) {

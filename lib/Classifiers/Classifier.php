@@ -43,16 +43,23 @@ class Classifier {
 	 * @return \Generator
 	 */
 	public function classifyFiles(string $model, array $queueFiles, int $timeout): \Generator {
-		$this->logger->debug('classifyFiles', ['queueFiles' => $queueFiles, 'model' => $model]);
+		$this->logger->debug('classifyFiles', ['count' => count($queueFiles), 'queueFiles' => $queueFiles, 'model' => $model]);
 		$paths = [];
 		$processedFiles = [];
 		foreach ($queueFiles as $queueFile) {
 			$files = $this->rootFolder->getById($queueFile->getFileId());
+			$this->logger->debug('classifyFiles 2', [
+				'count files' => count($files),
+				'queueFile->getFileId()' => $queueFile->getFileId(), 
+				'this->rootFolder->getById($queueFile->getFileId())' => $this->rootFolder->getById($queueFile->getFileId()),  
+				'queueFile' => $queueFile
+			]);
 			if (count($files) === 0) {
 				continue;
 			}
 			try {
 				$paths[] = $this->getConvertedFilePath($files[0]);
+				$this->logger->debug('classifyFiles 4', ['getpath' => $this->getConvertedFilePath($files[0])]);
 				$processedFiles[] = $queueFile;
 			} catch (NotFoundException $e) {
 				$this->logger->warning('Could not find file', ['exception' => $e]);

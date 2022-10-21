@@ -45,7 +45,7 @@ class QueueService {
 	 * @throws \OCP\DB\Exception
 	 */
 	public function insertIntoQueue(string $model, QueueFile $file) : void {
-		$this->logger->debug('QueueService insertIntoQueue', ['file' => $file]);
+		$this->logger->debug('QueueService insertIntoQueue', ['file' => $file,'enabled?' => $this->config->getAppValue('recognize', $model.'.enabled', 'false')]);
 		// Only add to queue if this model is actually enabled
 		if ($this->config->getAppValue('recognize', $model.'.enabled', 'false') !== 'true') {
 			return;
@@ -70,6 +70,10 @@ class QueueService {
 				'storageId' => $file->getStorageId(),
 				'rootId' => $file->getRootId(),
 			]);
+		}
+		else
+		{
+			$this->logger->error('QueueService scheduleJob jobList->has ', ['model' => $model,'file' => $file]);
 		}
 	}
 

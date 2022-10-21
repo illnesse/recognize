@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 
 class ClassifyFacesJob extends ClassifierJob {
 	public const MODEL_NAME = 'faces';
-	public const BATCH_SIZE = 100; // 100 images
+	public const BATCH_SIZE = 500; // 500 images
 	public const BATCH_SIZE_PUREJS = 25; // 25 images
 
 	private IConfig $config;

@@ -3,3 +3,4 @@ make
 npm run build
 #php composer.phar install
 chown -R www-data:www-data ../recognize/ 
+

@@ -49,6 +49,7 @@ class ClusteringFaceClassifier extends Classifier {
 	 * @return void
 	 */
 	public function classify(array $queueFiles): void {
+		$this->logger->debug('classify', ['queueFiles' => $queueFiles]);
 		if ($this->config->getAppValue('recognize', 'tensorflow.purejs', 'false') === 'true') {
 			$timeout = self::IMAGE_PUREJS_TIMEOUT;
 		} else {

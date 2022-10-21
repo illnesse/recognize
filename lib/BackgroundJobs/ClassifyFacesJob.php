@@ -21,6 +21,7 @@ class ClassifyFacesJob extends ClassifierJob {
 	public function __construct(ITimeFactory $time, LoggerInterface $logger, QueueService $queue, IConfig $config, ClusteringFaceClassifier $faceClassifier, IUserMountCache $mountCache, IJobList $jobList) {
 		parent::__construct($time, $logger, $queue, $mountCache, $jobList, $config);
 		$this->config = $config;
+		$this->logger = $logger;
 		$this->faces = $faceClassifier;
 	}
 
@@ -28,10 +29,12 @@ class ClassifyFacesJob extends ClassifierJob {
 	 * @inheritDoc
 	 */
 	protected function run($argument) {
+		$this->logger->debug('ClassifyFacesJob run', ['argument' => $argument]);
 		$this->runClassifier(self::MODEL_NAME, $argument);
 	}
 
 	protected function classify(array $files) : void {
+		$this->logger->debug('ClassifyFacesJob classify', ['files' => $files]);
 		$this->faces->classify($files);
 	}
 

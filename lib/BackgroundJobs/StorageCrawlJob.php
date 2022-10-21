@@ -49,6 +49,8 @@ class StorageCrawlJob extends QueuedJob {
 	}
 
 	protected function run($argument): void {
+
+		$this->logger->debug('StorageCrawlJob run');
 		$storageId = $argument['storage_id'];
 		$rootId = $argument['root_id'];
 		$overrideRoot = $argument['override_root'];
@@ -94,7 +96,7 @@ class StorageCrawlJob extends QueuedJob {
 		}
 
 		try {
-			$path = $root['path'] === '' ? '' :  $root['path'] . '/';
+			$path = $root['path']; //$root['path'] === '' ? '' :  $root['path'] . '/';
 			$qb = new CacheQueryBuilder($this->db, $this->systemConfig, $this->logger);
 			$files = $qb->selectFileCache()
 				->whereStorageId($storageId)

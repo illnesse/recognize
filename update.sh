@@ -1,4 +1,4 @@
-chown -R root:root ../recognize/
+chown -R root:root ../recognize/ 
 make
 npm run build
 #php composer.phar install

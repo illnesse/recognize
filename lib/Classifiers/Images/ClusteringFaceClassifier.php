@@ -49,19 +49,34 @@ class ClusteringFaceClassifier extends Classifier {
 	 * @return void
 	 */
 	public function classify(array $queueFiles): void {
-		$this->logger->debug('classify', ['queueFiles' => $queueFiles]);
+		$this->logger->debug('classify', ['queueFiles' => $queueFiles, 'count(queueFiles)' => count($queueFiles)]);
 		if ($this->config->getAppValue('recognize', 'tensorflow.purejs', 'false') === 'true') {
 			$timeout = self::IMAGE_PUREJS_TIMEOUT;
 		} else {
 			$timeout = self::IMAGE_TIMEOUT;
 		}
 
+
+		foreach ($queueFiles as $queueFile) {
+			//count($this->faceDetections->findByFileId($queueFile->getFileId()));
+			$this->logger->debug('classify 1 ', [
+				//'queueFiles' => $queueFiles, 
+				'fileid' => $queueFile->getFileId(),
+				'count(queueFiles)' => count($queueFiles), 
+				'count(findfile)' => count($this->faceDetections->findByFileId($queueFile->getFileId()))
+			]);
+		}
+		//$this->logger->debug('classify 2 ', ['count(queueFiles)' => count($queueFiles), 'count($this->faceDetections->findByFileId($queueFile->getFileId()))' => count($this->faceDetections->findByFileId($queueFile->getFileId()))]);
+
+
 		// Only process files that haven't been processed before
+		/*
 		$queueFiles = array_values(
 			array_filter($queueFiles, fn($queueFile) =>
 				count($this->faceDetections->findByFileId($queueFile->getFileId())) === 0
 			)
 		);
+		*/
 
 		$usersToCluster = [];
 		$classifierProcess = $this->classifyFiles(self::MODEL_NAME, $queueFiles, $timeout);

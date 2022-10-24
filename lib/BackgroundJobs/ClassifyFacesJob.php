@@ -34,7 +34,7 @@ class ClassifyFacesJob extends ClassifierJob {
 	}
 
 	protected function classify(array $files) : void {
-		$this->logger->debug('ClassifyFacesJob classify', ['files' => $files]);
+		$this->logger->debug('ClassifyFacesJob classify', ['count(files)' => count($files)]);
 		$this->faces->classify($files);
 	}
 

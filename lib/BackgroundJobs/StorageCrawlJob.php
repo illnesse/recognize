@@ -145,6 +145,13 @@ class StorageCrawlJob extends QueuedJob {
 						}
 					}
 					if (in_array(ClusteringFaceClassifier::MODEL_NAME, $models)) {
+
+						$this->logger->debug('StorageCrawlJob selectFileCache faces',[
+							'$storageId' => $storageId,
+							'$rootId' => $rootId,
+							'$file[fileid]' => $file['fileid']
+						]);
+
 						$this->queue->insertIntoQueue(ClusteringFaceClassifier::MODEL_NAME, $queueFile);
 					}
 				}

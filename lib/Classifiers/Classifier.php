@@ -49,7 +49,6 @@ class Classifier {
 		foreach ($queueFiles as $queueFile) {
 			$files = $this->rootFolder->getById($queueFile->getFileId());
 			$this->logger->debug('classifyFiles 2', [
-//				'path' => $queueFile->getPath(),
 				'count files' => count($files),
 				'queueFile->getFileId()' => $queueFile->getFileId(), 
 				'this->rootFolder->getById($queueFile->getFileId())' => $this->rootFolder->getById($queueFile->getFileId()),  

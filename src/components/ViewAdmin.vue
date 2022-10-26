@@ -175,7 +175,7 @@
 					{{ t('recognize', 'WASM mode was activated automatically, because your machine does not support native TensorFlow operation:') }}
 				</p>
 				<ul>
-					<li v-for="reason in pureJSReasons">
+					<li v-for="reason in pureJSReasons" :key="reason">
 						{{ reason }}
 					</li>
 				</ul>
@@ -198,9 +198,7 @@
 </template>
 
 <script>
-import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection'
-import NcNoteCard from '@nextcloud/vue/dist/Components/NcNoteCard'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch'
+import { NcNoteCard, NcSettingsSection, NcCheckboxRadioSwitch } from '@nextcloud/vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'

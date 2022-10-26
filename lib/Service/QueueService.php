@@ -73,7 +73,7 @@ class QueueService {
 		}
 		else
 		{
-			$this->logger->error('QueueService scheduleJob jobList->has ', ['model' => $model,'file' => $file]);
+//			$this->logger->error('QueueService scheduleJob jobList->has ', ['model' => $model,'file' => $file]);
 		}
 	}
 

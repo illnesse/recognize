@@ -110,7 +110,7 @@ class StorageCrawlJob extends QueuedJob {
 				->andWhere($qb->expr()->in('mimetype', $qb->createNamedParameter($mimeTypes, IQueryBuilder::PARAM_INT_ARRAY)))
 				->andWhere($qb->expr()->gt('filecache.fileid', $qb->createNamedParameter($lastFileId)))
 				->orderBy('filecache.fileid', 'ASC')
-				->setMaxResults(100)
+				->setMaxResults(500)
 				->executeQuery();
 		} catch (Exception $e) {
 			$this->logger->error('Could not fetch files', ['exception' => $e]);

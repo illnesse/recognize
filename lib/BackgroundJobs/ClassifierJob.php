@@ -30,7 +30,7 @@ abstract class ClassifierJob extends TimedJob {
 		$this->userMountCache = $userMountCache;
 		$this->jobList = $jobList;
 		$this->config = $config;
-		$this->setInterval(60 * 1);
+		$this->setInterval(30);
 		$this->setTimeSensitivity(self::TIME_INSENSITIVE);
 	}
 
